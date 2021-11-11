@@ -1,0 +1,11 @@
+type Spot @model {
+  id: ID!
+  user_id: String!
+  fish_type: String
+  time_caught: String
+  bait: String
+  weather: String
+  tide: String
+  lat_long: String!
+  public: Boolean
+}
