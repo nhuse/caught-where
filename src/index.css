@@ -34,14 +34,21 @@ code {
   border-bottom: 1px solid #858484;
   box-shadow: 0 1px 0 rgb(0, 0, 0);
   padding: 0;
-  height: 50px;
+  height: 6vh;
 }
 
 .nav-btn {
-  height: 35px;
+  height: 48px;
   font-size: 20px;
   font-family: 'AmazonEmber';
   color: #fff;
   border: none;
   background-color: #FF9900;
+  cursor: pointer;
+}
+
+.map-wrapper {
+  height: 93vh;
+  display: flex;
+  justify-content: center;
 }
