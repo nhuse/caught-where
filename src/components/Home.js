@@ -1,7 +1,8 @@
 import Navbar from '../components/Navbar';
 import MapContainer from '../components/MapContainer';
 
-export default function Home({ user }) {
+export default function Home({ user, spots }) {
+  console.log(spots)
   return (
     <div className="home-wrapper">
       <Navbar user={user} />

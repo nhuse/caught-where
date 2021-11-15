@@ -7,12 +7,15 @@ export const getSpot = /* GraphQL */ `
       id
       user_id
       fish_type
+      date_caught
       time_caught
       bait
       weather
       tide
-      lat_long
+      lat
+      long
       public
+      image
       createdAt
       updatedAt
     }
@@ -29,12 +32,15 @@ export const listSpots = /* GraphQL */ `
         id
         user_id
         fish_type
+        date_caught
         time_caught
         bait
         weather
         tide
-        lat_long
+        lat
+        long
         public
+        image
         createdAt
         updatedAt
       }

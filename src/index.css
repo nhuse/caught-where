@@ -37,11 +37,9 @@ code {
   height: 6vh;
 }
 
-.nav-btn {
+.nav-div {
   height: 48px;
   font-size: 20px;
-  font-family: 'AmazonEmber';
-  color: #fff;
   border: none;
   background-color: #FF9900;
   cursor: pointer;
@@ -51,4 +49,27 @@ code {
   height: 93vh;
   display: flex;
   justify-content: center;
+}
+
+.sas-map-wrapper {
+  height: 93vh;
+  width: 48%;
+}
+
+.add-a-catch-wrapper {
+  margin-top: .25%;
+  height: 93vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: 'AmazonEmber';
+  color: white
+}
+
+.active {
+  color: black;
 }
