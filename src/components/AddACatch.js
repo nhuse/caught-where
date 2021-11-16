@@ -4,6 +4,8 @@ import SaveASpotMapContainer from "./SaveASpotMapContainer"
 import { API, Storage } from "aws-amplify";
 import { createSpot as createSpotMutation } from "../graphql/mutations";
 
+const WEATHERKEY = process.env.REACT_APP_WEATHER_KEY;
+
 export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
   const initialFormState = {
     user_id: "",
@@ -68,6 +70,15 @@ export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
       setSpotData(initialFormState);
       setClickedCoords(null);
     }
+
+      const date = new Date(Date.now()-(1000*60*60*24)).getTime() / 1000
+
+      
+
+      // fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${String(clickedCoords.lat)}&lon=${String(clickedCoords.lng)}&dt=${Math.floor(date)}&appid=${WEATHERKEY}`)
+      // .then(res => res.json())
+      // .then(data => console.log(data))
+
   }
 
   console.log(spots)
