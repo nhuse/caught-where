@@ -5,7 +5,7 @@ export default function Home({ user, spots }) {
   return (
     <div className="home-wrapper">
       <Navbar user={user} />
-      <MapContainer />
+      <MapContainer spots={spots} />
     </div>
   )
 }
