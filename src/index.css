@@ -75,6 +75,6 @@ code {
 }
 
 .image-info-window {
-  height: 200px;
+  height: auto;
   width: 200px;
 }

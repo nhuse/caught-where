@@ -87,10 +87,8 @@ export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
     }
     }).then((response) => response.json()).then((jsonData) => {
       const tides = jsonData.data
-      console.log(jsonData)
       if(jsonData.data.length === 1){
         const tideTime = new Date(tides[0].time).getTime() / 1000
-        console.log(tideTime)
         if(jsonData.data[0].type==="high"){
           if(inputtedDateTime-tzOffset >= tideTime-(60*60) && inputtedDateTime-tzOffset <= tideTime+(60*30)){
             data.tide = "High"
@@ -126,10 +124,6 @@ export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
     }).catch((error) => {
       console.log(error)
     })
-
-
-    console.log(data)
-
 
     if(!data.lat || !data.long || !data.user_id){
       alert("Error")

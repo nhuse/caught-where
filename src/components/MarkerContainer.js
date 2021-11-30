@@ -51,7 +51,6 @@ export default function MarkerContainer({ spot, clusterer, index }) {
     {openWindow ? (
       <InfoWindow onCloseClick={handleToggleClose}>
         <div className="info-window">
-          {console.log(spot)}
           <h3 className="fish-type-info-window">{spot.fish_type.toUpperCase()}</h3>
           <p className="user-caught">Caught By: {spot.user_id.toUpperCase()}</p>
           <p className="caught-on">Caught on: {date} at {time}</p>
