@@ -143,8 +143,14 @@ export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
   return (
   <div className="add-a-catch-page">
     <Navbar user={user} />
+    {!clickedCoords ? 
+    <div style={{ backgroundColor: 'black', opacity: 0.75, padding: "8px", height: "3vh", lineHeight: "3vh", textAlign: "center", fontSize: "18px", color: "white" }}>
+        Click the map to save a spot!
+    </div> :
+    null}
     <div className="add-a-catch-wrapper" >
       <SaveASpotMapContainer setClickedCoords={setClickedCoords} clickedCoords={clickedCoords} />
+      {clickedCoords ? 
       <div className="spot-form" style={{ width: "48%" }}>
         <h1>Save Your Spot</h1>
         {!clickedCoords ? 
@@ -167,7 +173,8 @@ export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
           <input type="checkbox" name="public" id="public" checked={isPublic} onChange={handleChange} /><br/><br/>
           <button type="submit" className="submit-button">Submit</button>
         </form> }
-      </div>
+      </div> : 
+      null}
     </div>
   </div>
   )

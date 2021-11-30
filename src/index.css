@@ -52,18 +52,22 @@ code {
   justify-content: center;
 }
 
-.sas-map-wrapper {
-  height: 93vh;
-  width: 48%;
-}
 
 .add-a-catch-wrapper {
   margin-top: .25%;
-  height: 93vh;
+  height: 88vh;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
+}
+
+.sas-map-wrapper {
+  margin-top: .5%;
+  display: flex;
+  align-content: center;
+  height: 89vh;
+  width: 100%;
 }
 
 .nav-link {

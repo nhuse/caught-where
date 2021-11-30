@@ -4,6 +4,10 @@ import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 const SaveASpotMapContainer = ({ setClickedCoords, clickedCoords }) => {
   const [currentPosition, setCurrentPosition] = useState({lat: 0, lng: 0});
   const [markerShown, setMarkerShown] = useState(false);
+  let mapStyles={
+    height: '88vh',
+    width: '100%',
+  };
 
   const success = (pos) => {
     const currentPosition = {
@@ -17,9 +21,11 @@ const SaveASpotMapContainer = ({ setClickedCoords, clickedCoords }) => {
     navigator.geolocation.getCurrentPosition(success);
   }, []);
 
-  const mapStyles = {
-    height: '92vh',
-    width: '100%',
+  if(clickedCoords) {
+    mapStyles = {
+      height: '93vh',
+      width: '100%',
+    }
   }
 
   const handleMapClick = (e) => {
@@ -38,7 +44,8 @@ const SaveASpotMapContainer = ({ setClickedCoords, clickedCoords }) => {
           onClick={handleMapClick}
           mapContainerStyle={mapStyles}
           zoom={13}
-          center={currentPosition} >
+          center={currentPosition} 
+        >
           {markerShown && <Marker position={clickedCoords} />}
         </GoogleMap>
       </LoadScript>
