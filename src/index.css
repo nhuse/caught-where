@@ -73,3 +73,8 @@ code {
 .active {
   color: black;
 }
+
+.image-info-window {
+  height: 200px;
+  width: 200px;
+}

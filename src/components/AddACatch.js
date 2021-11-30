@@ -5,6 +5,7 @@ import { API, Storage } from "aws-amplify";
 import { createSpot as createSpotMutation } from "../graphql/mutations";
 
 const WEATHERKEY = process.env.REACT_APP_WEATHER_KEY;
+const TIDEKEY = process.env.REACT_APP_TIDE_KEY;
 
 export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
   const initialFormState = {
@@ -44,7 +45,6 @@ export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
     setSpotData({...spotData,
       image: file.name
     })
-    console.log(file.name)
     await Storage.put(file.name, file)
     }
 
@@ -58,6 +58,79 @@ export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
       long: String(clickedCoords.lng),
       public: isPublic
     }
+    
+    const inputtedDate = new Date(data.date_caught)
+    let inputtedDateTime = inputtedDate.getTime() / 1000
+    
+    const time = data.time_caught.split(":")
+    const hours = parseInt(time[0])
+    const minutes = parseInt(time[1])
+    const unixTime = hours*60*60 + minutes*60
+    const tzOffset = inputtedDate.getTimezoneOffset()*60
+    inputtedDateTime = inputtedDateTime + unixTime + tzOffset;
+    
+    const nowDate = new Date()
+    const latestDate = new Date(nowDate.getTime() - (5*24*60*60*1000)).getTime() / 1000
+    
+    
+    if(inputtedDateTime > Math.floor(latestDate)){
+      await fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${String(clickedCoords.lat)}&lon=${String(clickedCoords.lng)}&dt=${Math.floor(inputtedDateTime)}&appid=${WEATHERKEY}`)
+      .then(res => res.json())
+      .then(json => data.weather = JSON.stringify(json.current))
+    }
+
+    const endTime = inputtedDateTime - tzOffset + (60*60*6)
+
+    await fetch(`https://api.stormglass.io/v2/tide/extremes/point?lat=${clickedCoords.lat}&lng=${clickedCoords.lng}&start=${inputtedDateTime-tzOffset-(60*60*6)}&end=${endTime}`, {
+    headers: {
+    'Authorization': TIDEKEY
+    }
+    }).then((response) => response.json()).then((jsonData) => {
+      const tides = jsonData.data
+      console.log(jsonData)
+      if(jsonData.data.length === 1){
+        const tideTime = new Date(tides[0].time).getTime() / 1000
+        console.log(tideTime)
+        if(jsonData.data[0].type==="high"){
+          if(inputtedDateTime-tzOffset >= tideTime-(60*60) && inputtedDateTime-tzOffset <= tideTime+(60*30)){
+            data.tide = "High"
+          } else if(inputtedDateTime-tzOffset > tideTime) {
+            data.tide = "Falling"
+          } else if(inputtedDateTime-tzOffset < tideTime) {
+            data.tide = "Rising"
+          }
+        }else if(jsonData.data[0].type==="low"){
+          if(inputtedDateTime-tzOffset >= tideTime-(60*60) && inputtedDateTime-tzOffset <= tideTime+(60*30)){
+            data.tide = "Low"
+          } else if(inputtedDateTime-tzOffset > tideTime) {
+            data.tide = "Rising"
+          } else if(inputtedDateTime-tzOffset < tideTime) {
+            data.tide = "Falling"
+          }
+        }
+      } else if(jsonData.data.length === 2){
+        const highTideTime = new Date(tides[0].time).getTime() / 1000
+        const lowTideTime = new Date(tides[1].time).getTime() / 1000
+        if(inputtedDateTime-tzOffset >= highTideTime-(60*60) && inputtedDateTime-tzOffset <= highTideTime+(60*30) && jsonData.data[0].type==="high"){
+          data.tide = "High"
+        }else if(inputtedDateTime-tzOffset >= lowTideTime-(60*60) && inputtedDateTime-tzOffset <= lowTideTime+(60*30) && jsonData.data[1].type==="low"){
+          data.tide = "Low"
+        }else if(inputtedDateTime-tzOffset > highTideTime && inputtedDateTime-tzOffset < lowTideTime){
+          data.tide = "Falling"
+        }else if(inputtedDateTime-tzOffset > lowTideTime && inputtedDateTime-tzOffset < highTideTime){
+          data.tide = "Rising"
+        }
+      } else if(jsonData.data.length === 0){
+        data.tide = ""
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+
+
+    console.log(data)
+
+
     if(!data.lat || !data.long || !data.user_id){
       alert("Error")
     } else {
@@ -70,18 +143,9 @@ export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
       setSpotData(initialFormState);
       setClickedCoords(null);
     }
+  };
+    
 
-      const date = new Date(Date.now()-(1000*60*60*24)).getTime() / 1000
-
-      
-
-      // fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${String(clickedCoords.lat)}&lon=${String(clickedCoords.lng)}&dt=${Math.floor(date)}&appid=${WEATHERKEY}`)
-      // .then(res => res.json())
-      // .then(data => console.log(data))
-
-  }
-
-  console.log(spots)
   return (
   <div className="add-a-catch-page">
     <Navbar user={user} />
