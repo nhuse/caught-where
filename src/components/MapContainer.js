@@ -47,7 +47,7 @@ const MapContainer = ({ spots }) => {
   }, []);
 
   const mapStyles = {
-    height: '93.94vh',
+    height: '93vh',
     width: '100%',
   }
 
@@ -67,7 +67,8 @@ const MapContainer = ({ spots }) => {
               )
             }
             <MarkerClusterer options={{
-              averageCenter: true
+              averageCenter: true,
+              maxZoom: 12
             }}>
               {clusterer => 
                 spots ? spots.filter(spot => spot.public).map((spot,index) => {

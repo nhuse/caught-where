@@ -74,11 +74,11 @@ export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
     
     
     if(inputtedDateTime > Math.floor(latestDate)){
-      await fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${String(clickedCoords.lat)}&lon=${String(clickedCoords.lng)}&dt=${Math.floor(inputtedDateTime)}&appid=${WEATHERKEY}`)
+      fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${String(clickedCoords.lat)}&lon=${String(clickedCoords.lng)}&dt=${Math.floor(inputtedDateTime)}&appid=${WEATHERKEY}&units=imperial`)
       .then(res => res.json())
       .then(json => data.weather = JSON.stringify(json.current))
     }
-
+  
     const endTime = inputtedDateTime - tzOffset + (60*60*6)
 
     await fetch(`https://api.stormglass.io/v2/tide/extremes/point?lat=${clickedCoords.lat}&lng=${clickedCoords.lng}&start=${inputtedDateTime-tzOffset-(60*60*6)}&end=${endTime}`, {

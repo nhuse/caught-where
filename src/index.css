@@ -46,8 +46,9 @@ code {
 }
 
 .map-wrapper {
-  height: 93vh;
+  height: 93.5vh;
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 

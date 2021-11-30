@@ -4,6 +4,18 @@ import fishSVG from '../assets/images/aquarium.svg';
 
 export default function MarkerContainer({ spot, clusterer, index }) {
   const [openWindow, setOpenWindow] = useState(false);
+  const degToCompass = (num) => {
+    const val = parseInt((num / 22.5) + 0.5);
+    const arr = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
+    return arr[(val % 16)];
+  }
+  
+  let parsedWeather;
+  let windDir;
+  if(spot.weather !== "") {
+    parsedWeather = JSON.parse(spot.weather);
+    windDir = degToCompass(parsedWeather.wind_deg)
+  }
 
   let date = spot.date_caught.split('-')
   let year = date[0].split('')
@@ -24,6 +36,7 @@ export default function MarkerContainer({ spot, clusterer, index }) {
     }
     return time.join (''); // return adjusted time or original string
   }
+
 
   const handleToggleOpen = () => {
     setOpenWindow(true)
@@ -62,14 +75,19 @@ export default function MarkerContainer({ spot, clusterer, index }) {
           <p className="tide-info-window">Tide: {spot.tide.toUpperCase()}</p>
           :
           null}
+          <br/>
           {spot.weather !== "" ?
-          <>
-          <p className="weather-info-window">Weather Condition: {spot.weather.toUpperCase()}</p>
-          <p className="wind-info-window">Wind: {spot.weather.toUpperCase()}</p>
-          </>
+          <div >
+            <h4 className="weather-info-header">Weather:</h4>
+            <ul style={{listStyle: "none", textAlign: "center", padding: "0" }}>
+              <li>Condition: {parsedWeather.weather[0].main.toUpperCase()}</li>
+              <li>Wind: {Math.floor(parsedWeather.wind_speed)} MPH {windDir}</li>
+              <li>Temperature: {Math.floor(parsedWeather.temp)} {'\u00B0'}F</li>
+            </ul>
+          </div>
           :
           null}
-          {spot.image !== '' ? 
+          {spot.image !== '' ?
           <img className="image-info-window" src={spot.image} alt="fish"/>
           :
           null}
