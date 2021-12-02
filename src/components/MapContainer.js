@@ -2,37 +2,9 @@ import { useState, useEffect } from 'react';
 import { GoogleMap, Marker, LoadScript, MarkerClusterer } from '@react-google-maps/api';
 import MarkerContainer from './MarkerContainer';
 
-const MapContainer = ({ spots }) => {
+const MapContainer = ({ spots, isInSpots, user, fetchSpots }) => {
   const [currentPosition, setCurrentPosition] = useState({lat: 0, lng: 0});
-  // const spots = [{
-  //   id: 1,
-  //   user_id: "dummy account",
-  //   fish_type: "redfish",
-  //   date_caught: "2020-01-01",
-  //   time_caught: "15:30",
-  //   bait: "mullet",
-  //   weather: "sunny",
-  //   tide: "high",
-  //   lat: "19.65",
-  //   long: "20.38",
-  //   public: true,
-  //   image: ""
-  // },
-  // {
-  //   id: 2,
-  //   user_id: "dummy account1",
-  //   fish_type: "Trout",
-  //   date_caught: "2020-01-01",
-  //   time_caught: "12:00",
-  //   bait: "mullet",
-  //   weather: "sunny",
-  //   tide: "high",
-  //   lat: "39.65",
-  //   long: "28.38",
-  //   public: false,
-  //   image: ""
-  // }]
-
+  
   const success = (pos) => {
     const currentPosition = {
       lat: pos.coords.latitude,
@@ -55,10 +27,10 @@ const MapContainer = ({ spots }) => {
     <div className="map-wrapper">
       <LoadScript
         googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        {!isInSpots ?
         <GoogleMap
-          // onClick={handleMapClick}
           mapContainerStyle={mapStyles}
-          zoom={13}
+          zoom={11}
           center={currentPosition}>
             {
               currentPosition.lat &&
@@ -71,16 +43,39 @@ const MapContainer = ({ spots }) => {
               maxZoom: 12
             }}>
               {clusterer => 
-                spots ? spots.filter(spot => spot.public).map((spot,index) => {
+                spots ? spots.map((spot, index) => {
                   return (
-                    <MarkerContainer key={spot.id} spot={spot} clusterer={clusterer} index={index} />
+                    <MarkerContainer key={spot.id} spot={spot} spots={spots} clusterer={clusterer} index={index} isInSpots={isInSpots} user={user} fetchSpots={fetchSpots} />
                   )
                 })
                 :
                 null
               }
             </MarkerClusterer>
-        </GoogleMap>
+        </GoogleMap> 
+        :
+        <GoogleMap
+          mapContainerStyle={{
+            height: '88vh',
+            width: '100%'
+          }}
+          zoom={3}
+          center={currentPosition}>
+            <MarkerClusterer options={{
+              averageCenter: true,
+              maxZoom: 12
+            }}>
+              {clusterer => 
+                spots ? spots.map((spot, index) => {
+                  return (
+                    <MarkerContainer key={spot.id} spot={spot} spots={spots} clusterer={clusterer} index={index} isInSpots={isInSpots} user={user} fetchSpots={fetchSpots} />
+                  )
+                })
+                :
+                null
+              }
+            </MarkerClusterer>
+        </GoogleMap>}
       </LoadScript>
     </div>
   )

@@ -8,17 +8,6 @@ import { listSpots } from './graphql/queries';
 import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-// const initialFormState = {
-//   user_id: '', 
-//   fish_type: '', 
-//   time_caught: '', 
-//   bait: '',
-//   weather: '',
-//   tide: '',
-//   lat_long: '',
-//   public: false
-// }
-
 function App() {
   const [user, setUser] = useState();
   const [spots, setSpots] = useState([]);
@@ -43,20 +32,12 @@ function App() {
     setSpots(apiData.data.listSpots.items);
   }
 
-  // async function updateSpot() {
-  //   if(!formData.user_id || formData.lat_long) return;
-  //   await API.graphql({ query: updateSpotMutation, variables: { input: formData } });
-  //   const updatedSpotsArr = spots.filter
-  //   setSpots([...spots, formData]);
-  //   setFormData(initialFormState);
-  // }
-
   return (
     <div className="App">
       <Routes>
-        <Route exact path="/" element={<Home user={user} spots={spots} />} />
-        <Route exact path="/add_a_spot" element={<AddACatch user={user} spots={spots} setSpots={setSpots} fetchSpots={fetchSpots} />} />
-        <Route exact path="/your_spots" element={<YourSpots user={user} spots={spots} />} />
+        <Route exact path="/" element={<Home user={user} spots={spots} setSpots={setSpots} fetchSpots={fetchSpots} />} />
+        <Route exact path="/add_a_spot" element={<AddACatch user={user} spots={spots} setSpots={setSpots} />} />
+        <Route exact path="/your_spots" element={<YourSpots user={user} spots={spots} setSpots={setSpots} fetchSpots={fetchSpots} />} />
       </Routes>
     </div>
   );

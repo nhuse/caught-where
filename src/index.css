@@ -46,7 +46,6 @@ code {
 }
 
 .map-wrapper {
-  height: 93.5vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,4 +81,9 @@ code {
 .image-info-window {
   height: auto;
   width: 200px;
+}
+
+.info-window-edit-form {
+  height: 340px;
+  width: 175px;
 }

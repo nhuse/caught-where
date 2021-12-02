@@ -7,7 +7,7 @@ import { createSpot as createSpotMutation } from "../graphql/mutations";
 const WEATHERKEY = process.env.REACT_APP_WEATHER_KEY;
 const TIDEKEY = process.env.REACT_APP_TIDE_KEY;
 
-export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
+export default function AddACatch({ user, setSpots, spots }) {
   const initialFormState = {
     user_id: "",
     fish_type: "",

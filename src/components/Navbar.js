@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { AmplifySignOut } from '@aws-amplify/ui-react';
 import '../index.css'
 
-export default function Navbar({ user }) {
+export default function Navbar() {
 
   return (
     <nav className="navbar" style={{ display:"flex", justifyContent: "space-between", 
