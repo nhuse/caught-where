@@ -70,3 +70,48 @@ export const deleteSpot = /* GraphQL */ `
     }
   }
 `;
+export const createUserDefaultLocation = /* GraphQL */ `
+  mutation CreateUserDefaultLocation(
+    $input: CreateUserDefaultLocationInput!
+    $condition: ModelUserDefaultLocationConditionInput
+  ) {
+    createUserDefaultLocation(input: $input, condition: $condition) {
+      id
+      user_id
+      lat
+      long
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUserDefaultLocation = /* GraphQL */ `
+  mutation UpdateUserDefaultLocation(
+    $input: UpdateUserDefaultLocationInput!
+    $condition: ModelUserDefaultLocationConditionInput
+  ) {
+    updateUserDefaultLocation(input: $input, condition: $condition) {
+      id
+      user_id
+      lat
+      long
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUserDefaultLocation = /* GraphQL */ `
+  mutation DeleteUserDefaultLocation(
+    $input: DeleteUserDefaultLocationInput!
+    $condition: ModelUserDefaultLocationConditionInput
+  ) {
+    deleteUserDefaultLocation(input: $input, condition: $condition) {
+      id
+      user_id
+      lat
+      long
+      createdAt
+      updatedAt
+    }
+  }
+`;

@@ -12,3 +12,11 @@ type Spot @model {
   public: Boolean
   image: String
 }
+
+
+type UserDefaultLocation @model {
+  id: ID!
+  user_id: String!
+  lat: String!
+  long: String!
+}

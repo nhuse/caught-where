@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { InfoWindow, Marker } from '@react-google-maps/api';
 import { API } from "aws-amplify";
-import fishSVG from '../assets/images/aquarium.svg';
+import fish from '../assets/images/fish.png';
 import { updateSpot } from "../graphql/mutations";
 
 const WEATHERKEY = process.env.REACT_APP_WEATHER_KEY;
 const TIDEKEY = process.env.REACT_APP_TIDE_KEY;
 
-export default function MarkerContainer({ spot, clusterer, index, isInSpots, user, fetchSpots }) {
+export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetchSpots }) {
   const [openWindow, setOpenWindow] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({})
@@ -180,10 +180,9 @@ export default function MarkerContainer({ spot, clusterer, index, isInSpots, use
       }}
       clusterer={clusterer}
       icon={{
-        url: fishSVG,
+        url: fish,
         scaledSize: new window.google.maps.Size(30, 30)
       }}
-      label={index.toString()}
       onClick={() => handleToggleOpen(spot.id)}
       >
       {openWindow ? (
@@ -234,10 +233,9 @@ export default function MarkerContainer({ spot, clusterer, index, isInSpots, use
       }}
       clusterer={clusterer}
       icon={{
-        url: fishSVG,
+        url: fish,
         scaledSize: new window.google.maps.Size(30, 30)
       }}
-      label={index.toString()}
       onClick={() => handleToggleOpen(spot.id)}
       >
       {openWindow ? (

@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { GoogleMap, Marker, LoadScript, MarkerClusterer } from '@react-google-maps/api';
 import MarkerContainer from './MarkerContainer';
+import { API } from "aws-amplify";
+import { createUserDefaultLocation, updateUserDefaultLocation } from '../graphql/mutations';
 
-const MapContainer = ({ spots, isInSpots, user, fetchSpots }) => {
+const MapContainer = ({ spots, isInSpots, user, fetchSpots, isSettingDefSpot, setIsSettingDefSpot, userDefault, listDefLocs }) => {
   const [currentPosition, setCurrentPosition] = useState({lat: 0, lng: 0});
+  // const [userDefault, setUserDefault] = useState(null);
   
   const success = (pos) => {
     const currentPosition = {
@@ -13,16 +16,58 @@ const MapContainer = ({ spots, isInSpots, user, fetchSpots }) => {
     setCurrentPosition(currentPosition);
   }
 
+  async function handleMapClick(e) {
+    let data = {
+      user_id: user.username,
+      lat: String(e.latLng.lat()),
+      long: String(e.latLng.lng())
+    }
+    if (userDefault) {
+      data = {...data,
+        id: userDefault.id
+      }
+      await API.graphql({ query: updateUserDefaultLocation, variables: { input: data } });
+    } else {
+      await API.graphql({ query: createUserDefaultLocation, variables: { input: data } });
+    }
+    await listDefLocs()
+    setIsSettingDefSpot(false)
+  }
+
+  // async function listDefLocs() {
+  //   if(user) {
+  //     const apiData = await API.graphql({ query: listUserDefaultLocations });
+  //     setUserDefault(apiData.data.listUserDefaultLocations.items.find(item => item.user_id === user.username));
+  //   }
+  // }
+
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success);
   }, []);
 
+  // useEffect(() => {
+  //   listDefLocs()
+  // }, [user]);
+
   const mapStyles = {
-    height: '93vh',
+    height: '89vh',
     width: '100%',
   }
 
+  if(isSettingDefSpot) {
+    return (
+      <LoadScript
+      googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+        <GoogleMap
+        onClick={handleMapClick}
+        mapContainerStyle={mapStyles}
+        zoom={8}
+        center={currentPosition}      
+        />
+      </LoadScript>
+    )
+  } else {
   return (
     <div className="map-wrapper">
       <LoadScript
@@ -30,12 +75,12 @@ const MapContainer = ({ spots, isInSpots, user, fetchSpots }) => {
         {!isInSpots ?
         <GoogleMap
           mapContainerStyle={mapStyles}
-          zoom={11}
-          center={currentPosition}>
+          zoom={12}
+          center={userDefault ? userDefault : currentPosition}>
             {
               currentPosition.lat &&
               (
-                <Marker position={currentPosition} />
+                <Marker position={userDefault ? userDefault : currentPosition} />
               )
             }
             <MarkerClusterer options={{
@@ -56,11 +101,11 @@ const MapContainer = ({ spots, isInSpots, user, fetchSpots }) => {
         :
         <GoogleMap
           mapContainerStyle={{
-            height: '88vh',
+            height: '89vh',
             width: '100%'
           }}
-          zoom={3}
-          center={currentPosition}>
+          zoom={4}
+          center={userDefault ? userDefault : currentPosition}>
             <MarkerClusterer options={{
               averageCenter: true,
               maxZoom: 12
@@ -78,7 +123,7 @@ const MapContainer = ({ spots, isInSpots, user, fetchSpots }) => {
         </GoogleMap>}
       </LoadScript>
     </div>
-  )
+  )}
 }
 
 export default MapContainer;

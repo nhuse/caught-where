@@ -48,3 +48,38 @@ export const listSpots = /* GraphQL */ `
     }
   }
 `;
+export const getUserDefaultLocation = /* GraphQL */ `
+  query GetUserDefaultLocation($id: ID!) {
+    getUserDefaultLocation(id: $id) {
+      id
+      user_id
+      lat
+      long
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUserDefaultLocations = /* GraphQL */ `
+  query ListUserDefaultLocations(
+    $filter: ModelUserDefaultLocationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserDefaultLocations(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        user_id
+        lat
+        long
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

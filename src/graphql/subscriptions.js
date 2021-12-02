@@ -61,3 +61,39 @@ export const onDeleteSpot = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUserDefaultLocation = /* GraphQL */ `
+  subscription OnCreateUserDefaultLocation {
+    onCreateUserDefaultLocation {
+      id
+      user_id
+      lat
+      long
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUserDefaultLocation = /* GraphQL */ `
+  subscription OnUpdateUserDefaultLocation {
+    onUpdateUserDefaultLocation {
+      id
+      user_id
+      lat
+      long
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUserDefaultLocation = /* GraphQL */ `
+  subscription OnDeleteUserDefaultLocation {
+    onDeleteUserDefaultLocation {
+      id
+      user_id
+      lat
+      long
+      createdAt
+      updatedAt
+    }
+  }
+`;

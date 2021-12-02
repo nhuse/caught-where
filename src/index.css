@@ -30,9 +30,7 @@ code {
 }
 
 .navbar {
-  background-color: #fff;
-  border-bottom: 1px solid #858484;
-  box-shadow: 0 1px 0 rgb(0, 0, 0);
+  background-color: #d7d7d7;
   padding: 0;
   height: 6vh;
 }
@@ -53,8 +51,8 @@ code {
 
 
 .add-a-catch-wrapper {
-  margin-top: .25%;
-  height: 88vh;
+  border-top: #414141 solid 1px;
+  height: 89vh;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -62,10 +60,9 @@ code {
 }
 
 .sas-map-wrapper {
-  margin-top: .5%;
+  height: 89vh;
   display: flex;
   align-content: center;
-  height: 89vh;
   width: 100%;
 }
 
@@ -85,5 +82,12 @@ code {
 
 .info-window-edit-form {
   height: 340px;
-  width: 175px;
+  width: 200px;
+}
+
+#def-spot {
+  height: auto;
+  color: white;
+  opacity: 1.00;
+  background-color: #FF9900;
 }

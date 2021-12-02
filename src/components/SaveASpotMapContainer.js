@@ -5,7 +5,7 @@ const SaveASpotMapContainer = ({ setClickedCoords, clickedCoords }) => {
   const [currentPosition, setCurrentPosition] = useState({lat: 0, lng: 0});
   const [markerShown, setMarkerShown] = useState(false);
   let mapStyles={
-    height: '88vh',
+    height: '89vh',
     width: '100%',
   };
 
@@ -23,7 +23,7 @@ const SaveASpotMapContainer = ({ setClickedCoords, clickedCoords }) => {
 
   if(clickedCoords) {
     mapStyles = {
-      height: '93vh',
+      height: '93.5vh',
       width: '100%',
     }
   }
@@ -43,7 +43,7 @@ const SaveASpotMapContainer = ({ setClickedCoords, clickedCoords }) => {
         <GoogleMap
           onClick={handleMapClick}
           mapContainerStyle={mapStyles}
-          zoom={13}
+          zoom={12}
           center={currentPosition} 
         >
           {markerShown && <Marker position={clickedCoords} />}

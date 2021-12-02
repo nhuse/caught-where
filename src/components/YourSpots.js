@@ -7,7 +7,7 @@ export default function YourSpots({ spots, user, fetchSpots }) {
   return (
     <div className="home-wrapper">
       <Navbar />
-      <div style={{ backgroundColor: 'black', opacity: 0.75, padding: "8px", height: "3vh", lineHeight: "3vh", textAlign: "center", fontSize: "18px", color: "white" }}>
+      <div style={{ backgroundColor: '#414141', padding: "8px", height: "3vh", lineHeight: "3vh", textAlign: "center", fontSize: "18px", color: "white" }}>
         Click a Spot to view or edit it!
       </div>
       <MapContainer spots={spots} isInSpots={true} user={user} fetchSpots={fetchSpots} />
