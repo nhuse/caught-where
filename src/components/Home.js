@@ -52,20 +52,23 @@ export default function Home({ user, spots, fetchSpots }) {
         {isSettingDefSpot ? 
         <>
         Click the map to save a default location.
+        <button onClick={() => setIsSettingDefSpot(false)} className="nav-div" id="def-spot" style={{ marginLeft: "20px" }}>
+          Cancel
+        </button>
         </>
         :
         userDefault ?
         <div style={{ display: "flex", justifyContent: "space-around" }}>
           <button className="nav-div" id="def-spot" onClick={handleUpdateDefSpotClick} >
-            Update default spot
+            Update Default Location
           </button>
           <button className="nav-div" id="def-spot" onClick={handleDeleteDefSpotClick} >
-            Remove default spot
+            Remove Default Location
           </button>
         </div>
         :
         <button className="nav-div" id="def-spot" onClick={handleDefSpotClick} >
-          Set a default spot
+          Set a Default Location
         </button>
         }
       </div>
