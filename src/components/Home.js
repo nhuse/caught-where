@@ -48,26 +48,26 @@ export default function Home({ user, spots, fetchSpots }) {
   return (
     <div className="home-wrapper">
       <Navbar />
-      <div style={{ backgroundColor: '#414141', padding: "8px", height: "3vh", lineHeight: "3vh", textAlign: "center", fontSize: "18px", color: "white" }}>
+      <div className="default-spot">
         {isSettingDefSpot ? 
         <>
         Click the map to save a default location.
-        <button onClick={() => setIsSettingDefSpot(false)} className="nav-div" id="def-spot" style={{ marginLeft: "20px" }}>
+        <button onClick={() => setIsSettingDefSpot(false)} className="nav-div" id="cancel-def-spot">
           Cancel
         </button>
         </>
         :
         userDefault ?
-        <div style={{ display: "flex", justifyContent: "space-around" }}>
-          <button className="nav-div" id="def-spot" onClick={handleUpdateDefSpotClick} >
+        <div className="hasDefaultSpot" >
+          <button className="nav-div" id="update-def-spot" onClick={handleUpdateDefSpotClick} >
             Update Default Location
           </button>
-          <button className="nav-div" id="def-spot" onClick={handleDeleteDefSpotClick} >
+          <button className="nav-div" id="remove-def-spot" onClick={handleDeleteDefSpotClick} >
             Remove Default Location
           </button>
         </div>
         :
-        <button className="nav-div" id="def-spot" onClick={handleDefSpotClick} >
+        <button className="nav-div" id="add-def-spot" onClick={handleDefSpotClick} >
           Set a Default Location
         </button>
         }

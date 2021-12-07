@@ -17,6 +17,7 @@ function App() {
     .then(user => setUser(user))
     .catch(err => console.log(err))
     fetchSpots();
+    console.log("Hello from fetch")
   }, [])
 
   async function fetchSpots() {

@@ -34,21 +34,9 @@ const MapContainer = ({ spots, isInSpots, user, fetchSpots, isSettingDefSpot, se
     setIsSettingDefSpot(false)
   }
 
-  // async function listDefLocs() {
-  //   if(user) {
-  //     const apiData = await API.graphql({ query: listUserDefaultLocations });
-  //     setUserDefault(apiData.data.listUserDefaultLocations.items.find(item => item.user_id === user.username));
-  //   }
-  // }
-
-
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success);
   }, []);
-
-  // useEffect(() => {
-  //   listDefLocs()
-  // }, [user]);
 
   const mapStyles = {
     height: '89vh',
@@ -62,8 +50,8 @@ const MapContainer = ({ spots, isInSpots, user, fetchSpots, isSettingDefSpot, se
         <GoogleMap
         onClick={handleMapClick}
         mapContainerStyle={mapStyles}
-        zoom={8}
-        center={currentPosition}      
+        zoom={9}
+        center={userDefault ? userDefault : currentPosition}      
         />
       </LoadScript>
     )
@@ -75,7 +63,7 @@ const MapContainer = ({ spots, isInSpots, user, fetchSpots, isSettingDefSpot, se
         {!isInSpots ?
         <GoogleMap
           mapContainerStyle={mapStyles}
-          zoom={12}
+          zoom={11.5}
           center={userDefault ? userDefault : currentPosition}>
             {
               currentPosition.lat &&

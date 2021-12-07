@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Navbar from "./Navbar"
 import SaveASpotMapContainer from "./SaveASpotMapContainer"
 import { API, Storage } from "aws-amplify";
@@ -25,7 +25,7 @@ export default function AddACatch({ user, setSpots, spots }) {
   const [clickedCoords, setClickedCoords] = useState(null);
   const [isPublic, setIsPublic] = useState(false);
   const [spotData, setSpotData] = useState(initialFormState);
-
+  const spotInput = useRef(null);
 
   function handleChange(e) {
     const target = e.target;
@@ -149,15 +149,15 @@ export default function AddACatch({ user, setSpots, spots }) {
     </div> :
     null}
     <div className="add-a-catch-wrapper" >
-      <SaveASpotMapContainer setClickedCoords={setClickedCoords} clickedCoords={clickedCoords} />
+      <SaveASpotMapContainer setClickedCoords={setClickedCoords} clickedCoords={clickedCoords} spotInput={spotInput} />
       {clickedCoords ? 
-      <div className="spot-form" style={{ width: "48%" }}>
+      <div className="spot-form">
         <h1>Save Your Spot</h1>
         {!clickedCoords ? 
         <h2>Click your Spot on the Map</h2> :
         <form className="add-spot-form" onSubmit={handleSubmit}>
           <label htmlFor="fishCaught" >Type of Fish</label><br/>
-          <input type="text" name="fish_type" className="input-field" id="fishCaught" value={spotData.fish_type} onChange={handleChange} /><br/><br/>
+          <input ref={spotInput} type="text" name="fish_type" className="input-field" id="fishCaught" value={spotData.fish_type} onChange={handleChange} /><br/><br/>
           <label htmlFor="date" >Date</label><br/>
           <input type="date" name="date_caught" className="input-field" id="date" value={spotData.date_caught} onChange={handleChange} /><br/><br/>
           <label htmlFor="time" >Time</label><br/>

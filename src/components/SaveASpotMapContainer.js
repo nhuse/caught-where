@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { GoogleMap, Marker, LoadScript } from '@react-google-maps/api';
 
-const SaveASpotMapContainer = ({ setClickedCoords, clickedCoords }) => {
+const SaveASpotMapContainer = ({ setClickedCoords, clickedCoords, spotInput }) => {
   const [currentPosition, setCurrentPosition] = useState({lat: 0, lng: 0});
   const [markerShown, setMarkerShown] = useState(false);
   let mapStyles={
@@ -34,6 +34,7 @@ const SaveASpotMapContainer = ({ setClickedCoords, clickedCoords }) => {
       lng: e.latLng.lng()
     });
     setMarkerShown(true);
+    spotInput.current.focus();
   }
   
   return (

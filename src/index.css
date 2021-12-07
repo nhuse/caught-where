@@ -30,11 +30,15 @@ code {
 }
 
 .nav-div {
-  height: 48px;
-  font-size: 20px;
+  height: 5vh;
+  font-size: 1.5rem;
+  padding: 0px 5px;
   border: none;
   background-color: #FF9900;
   cursor: pointer;
+  display: flex; 
+  align-items: center;
+  justify-content: center;
 }
 
 .map-wrapper {
@@ -43,13 +47,11 @@ code {
   justify-content: center;
 }
 
-
 .add-a-catch-wrapper {
   border-top: #414141 solid 1px;
   height: 89vh;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
   align-items: center;
 }
 
@@ -60,9 +62,13 @@ code {
   width: 100%;
 }
 
+.spot-form {
+  width: 48%
+}
+
 .nav-link {
   font-family: 'AmazonEmber';
-  color: white
+  color: white;
 }
 
 .active {
@@ -79,9 +85,130 @@ code {
   width: 200px;
 }
 
-#def-spot {
-  height: auto;
+#time {
+  width: 20vw;
+}
+
+.default-spot {
+  display: flex;
+  justify-content: center;
+  background-color: #414141;
+  padding: 8px;
+  height: 3vh;
+  line-height: 3vh;
+  text-align: center;
+  font-size: 20px;
+  color: white;
+}
+
+.hasDefaultSpot {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#update-def-spot {
+  height: 3vh;
   color: white;
   opacity: 1.00;
   background-color: #FF9900;
+}
+
+#cancel-def-spot {
+  height: 3vh;
+  color: white;
+  opacity: 1.00;
+  margin: 20px;
+  background-color: #FF9900;
+}
+
+#remove-def-spot {
+  height: 3vh;
+  color: white;
+  opacity: 1.00;
+  background-color: #FF9900;
+}
+
+#add-def-spot {
+  height: 3vh;
+  color: white;
+  opacity: 1.00;
+  background-color: #FF9900;
+}
+
+#home {
+  margin-left: 50px;
+}
+
+#logout-btn {
+  margin-right: 50px;
+  color: white;
+}
+
+
+
+
+@media (max-width: 768px) {
+  .nav-div {
+    font-size: 4vw;
+    height: 4vh;
+  }
+
+  #add-a-spot {
+    font-size: 4vw;
+  }
+
+  #logout-btn {
+    margin-right: 10px;
+  }
+
+  #home {
+    margin-left: 10px;
+  }
+
+  .default-spot {
+    font-size: 3.75vw;
+  }
+
+  .image-info-window {
+    width: 125px;
+  }
+
+  .add-a-catch-wrapper {
+    height: 89vh;
+    flex-direction: column;
+  }
+
+  .sas-map-wrapper {
+    top: 6vh;
+  }
+
+  .spot-form {
+    width: 100%;
+    margin-top: 25px;
+  }
+
+  .add-a-catch-page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .default-spot {
+    justify-content: space-around;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  #update-def-spot {
+    font-size: 3.75vw;
+  }
+
+  #remove-def-spot {
+    font-size: 3.75vw;
+  }
+
+  #cancel-def-spot {
+    margin: 0;
+  }
+
 }
