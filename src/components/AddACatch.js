@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar"
 import SaveASpotMapContainer from "./SaveASpotMapContainer"
 import { API, Storage } from "aws-amplify";
@@ -26,6 +27,7 @@ export default function AddACatch({ user, setSpots, spots }) {
   const [isPublic, setIsPublic] = useState(false);
   const [spotData, setSpotData] = useState(initialFormState);
   const spotInput = useRef(null);
+  const navigate = useNavigate();
 
   function handleChange(e) {
     const target = e.target;
@@ -136,6 +138,7 @@ export default function AddACatch({ user, setSpots, spots }) {
       setSpots([...spots, data]);
       setSpotData(initialFormState);
       setClickedCoords(null);
+      navigate("/");
     }
   };
     
@@ -144,7 +147,7 @@ export default function AddACatch({ user, setSpots, spots }) {
   <div className="add-a-catch-page">
     <Navbar user={user} />
     {!clickedCoords ? 
-    <div style={{ backgroundColor: '#414141', padding: "8px", height: "3vh", lineHeight: "3vh", textAlign: "center", fontSize: "18px", color: "white" }}>
+    <div style={{ backgroundColor: '#a5a5a5', padding: "8px", height: "3vh", lineHeight: "3vh", textAlign: "center", fontSize: "18px", color: "white" }}>
         Click the map to save a spot!
     </div> :
     null}

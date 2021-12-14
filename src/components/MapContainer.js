@@ -63,7 +63,7 @@ const MapContainer = ({ spots, isInSpots, user, fetchSpots, isSettingDefSpot, se
         {!isInSpots ?
         <GoogleMap
           mapContainerStyle={mapStyles}
-          zoom={11.5}
+          zoom={7}
           center={userDefault ? userDefault : currentPosition}>
             {
               currentPosition.lat &&

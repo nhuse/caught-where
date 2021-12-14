@@ -14,6 +14,6 @@ export default function SignoutButton() {
   }
 
   return (
-    <button id="logout-btn" className="nav-div" onClick={handleSignOutButtonClick}>Sign Out</button>
+    <div id='logout-txt' onClick={handleSignOutButtonClick}>Sign Out</div>
   )
 }

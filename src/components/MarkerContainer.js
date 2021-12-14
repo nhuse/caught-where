@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { InfoWindow, Marker } from '@react-google-maps/api';
 import { API } from "aws-amplify";
 import fish from '../assets/images/fish.png';
-import { updateSpot } from "../graphql/mutations";
+import { updateSpot, deleteSpot } from "../graphql/mutations";
 
 const WEATHERKEY = process.env.REACT_APP_WEATHER_KEY;
 const TIDEKEY = process.env.REACT_APP_TIDE_KEY;
@@ -158,6 +158,14 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
     })
   }
 
+  const handleDeleteClick = async (spot) => {
+    const data = {
+      id: spot.id
+    }
+    await API.graphql({ query: deleteSpot, variables: { input: data } });
+    fetchSpots();
+  }
+
   function handleChange(e) {
     const target = e.target;
     const value = target.type === "checkbox" ? target.checked : target.value;
@@ -199,6 +207,13 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
             <p className="tide-info-window">Tide: {spot.tide.toUpperCase()}</p>
             :
             null}
+            {isInSpots || user.username === spot.user_id ?
+              <>
+                <p className='tide-info-window'>Lat: {spot.lat}</p>
+                <p className='tide-info-window'>Long: {spot.long}</p>
+              </>
+            :
+            null}
             <br/>
             {spot.weather !== "" ?
             <div >
@@ -216,9 +231,14 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
             :
             null}<br/>
             {isInSpots ? 
+            <>
             <button onClick={() => handleEditClick(spot)}>
-              Edit this Spot
+              Edit Spot
             </button>
+            <button style={{ marginLeft: "10px" }} onClick={() => handleDeleteClick(spot)}>
+              Delete Spot
+            </button>
+            </>
             : null}
           </div>
         </InfoWindow>

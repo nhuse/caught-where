@@ -52,24 +52,26 @@ export default function Home({ user, spots, fetchSpots }) {
         {isSettingDefSpot ? 
         <>
         Click the map to save a default location.
-        <button onClick={() => setIsSettingDefSpot(false)} className="nav-div" id="cancel-def-spot">
-          Cancel
-        </button>
+        <div onClick={() => setIsSettingDefSpot(false)} className="nav-div" id="cancel-def-spot">
+          <div id='cancel-txt'>
+            Cancel
+          </div>
+        </div>
         </>
         :
         userDefault ?
         <div className="hasDefaultSpot" >
-          <button className="nav-div" id="update-def-spot" onClick={handleUpdateDefSpotClick} >
+          <div className="nav-div" id="update-def-spot" onClick={handleUpdateDefSpotClick} >
             Update Default Location
-          </button>
-          <button className="nav-div" id="remove-def-spot" onClick={handleDeleteDefSpotClick} >
+          </div>
+          <div className="nav-div" id="remove-def-spot" onClick={handleDeleteDefSpotClick} >
             Remove Default Location
-          </button>
+          </div>
         </div>
         :
-        <button className="nav-div" id="add-def-spot" onClick={handleDefSpotClick} >
+        <div className="nav-div" id="add-def-spot" onClick={handleDefSpotClick} >
           Set a Default Location
-        </button>
+        </div>
         }
       </div>
       <MapContainer spots={spots} isInSpots={false} user={user} fetchSpots={fetchSpots} isSettingDefSpot={isSettingDefSpot} setIsSettingDefSpot={setIsSettingDefSpot} userDefault={userDefault} listDefLocs={listDefLocs} />

@@ -24,9 +24,10 @@ code {
 }
 
 .navbar {
-  background-color: #d7d7d7;
+  background-color: #a5a5a5;
   padding: 0;
   height: 6vh;
+  border-bottom: 1px solid black;
 }
 
 .nav-div {
@@ -34,9 +35,6 @@ code {
   min-width: 10vw;
   font-size: 1.5rem;
   padding: 0px 5px;
-  border: none;
-  background-color: #FF9900;
-  cursor: pointer;
   display: flex; 
   align-items: center;
   justify-content: center;
@@ -72,8 +70,16 @@ code {
   color: white;
 }
 
+.nav-link:hover {
+  border-bottom: 3px solid black;
+}
+
 .active {
   color: black;
+}
+
+.info-window {
+  font-size: .8vw;
 }
 
 .image-info-window {
@@ -93,7 +99,7 @@ code {
 .default-spot {
   display: flex;
   justify-content: center;
-  background-color: #414141;
+  background-color: #a5a5a5;
   padding: 8px;
   height: 3vh;
   line-height: 3vh;
@@ -112,29 +118,45 @@ code {
   height: 3vh;
   color: white;
   opacity: 1.00;
-  background-color: #FF9900;
+  cursor: pointer;
+}
+
+#update-def-spot:hover {
+  border-bottom: 3px solid black;
 }
 
 #cancel-def-spot {
   height: 3vh;
   color: white;
   opacity: 1.00;
-  margin: 20px;
-  background-color: #FF9900;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+#cancel-txt:hover {
+  border-bottom: 3px solid black;
 }
 
 #remove-def-spot {
   height: 3vh;
   color: white;
   opacity: 1.00;
-  background-color: #FF9900;
+  cursor: pointer;
+}
+
+#remove-def-spot:hover {
+  border-bottom: 3px solid black;
 }
 
 #add-def-spot {
   height: 3vh;
   color: white;
   opacity: 1.00;
-  background-color: #FF9900;
+  cursor: pointer;
+}
+
+#add-def-spot:hover {
+  border-bottom: 3px solid black;
 }
 
 #home {
@@ -146,6 +168,13 @@ code {
   color: white;
 }
 
+#logout-txt {
+  cursor: pointer;
+}
+
+#logout-txt:hover {
+  border-bottom: 3px solid black;
+}
 
 
 
@@ -172,7 +201,11 @@ code {
   }
 
   .image-info-window {
-    width: 125px;
+    width: 100px;
+  }
+
+  .info-window {
+    font-size: 3.35vw;
   }
 
   .add-a-catch-wrapper {

@@ -34,7 +34,9 @@ export default function Navbar() {
             Your Catches
         </NavLink>
       </div>
-      <SignoutButton />
+      <div className="nav-div" id="logout-btn">
+        <SignoutButton />
+      </div>
     </nav>
   )
 }
