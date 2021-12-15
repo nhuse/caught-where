@@ -35,7 +35,7 @@ code {
   min-width: 10vw;
   font-size: 1.5rem;
   padding: 0px 5px;
-  display: flex; 
+  display: flex;
   align-items: center;
   justify-content: center;
 }
@@ -71,7 +71,15 @@ code {
 }
 
 .nav-link:hover {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid white;
+}
+
+.input-field {
+  width: 10vw;
+}
+
+#fishCaught {
+  width: 13vw;
 }
 
 .active {
@@ -79,7 +87,7 @@ code {
 }
 
 .info-window {
-  font-size: .8vw;
+  font-size: .85vw;
 }
 
 .image-info-window {
@@ -87,19 +95,23 @@ code {
   width: 200px;
 }
 
+.img-input-field {
+  width: 12vw;
+}
+
 .info-window-edit-form {
-  height: 340px;
-  width: 200px;
+  height: auto;
+  width: 16vw;
 }
 
 #time {
-  width: 20vw;
+  width: 40%;
 }
 
 .default-spot {
   display: flex;
   justify-content: center;
-  background-color: #a5a5a5;
+  background-color: #414141;
   padding: 8px;
   height: 3vh;
   line-height: 3vh;
@@ -122,7 +134,7 @@ code {
 }
 
 #update-def-spot:hover {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid white;
 }
 
 #cancel-def-spot {
@@ -134,7 +146,7 @@ code {
 }
 
 #cancel-txt:hover {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid white;
 }
 
 #remove-def-spot {
@@ -145,7 +157,7 @@ code {
 }
 
 #remove-def-spot:hover {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid white;
 }
 
 #add-def-spot {
@@ -156,7 +168,7 @@ code {
 }
 
 #add-def-spot:hover {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid white;
 }
 
 #home {
@@ -173,7 +185,7 @@ code {
 }
 
 #logout-txt:hover {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid white;
 }
 
 
@@ -243,6 +255,31 @@ code {
 
   #cancel-def-spot {
     margin: 0;
+  }
+
+  .info-window-edit-form {
+    width: auto;
+  }
+
+  #fishCaught {
+    width: 75%;
+  }
+
+  #date {
+    width: 50%;
+  }
+
+  #time {
+    width: 50%;
+  }
+
+  #bait {
+    width: 75%;
+  }
+
+  #image {
+    font-size: 3.5vw;
+    width: 80%;
   }
 
 }

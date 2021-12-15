@@ -147,7 +147,7 @@ export default function AddACatch({ user, setSpots, spots }) {
   <div className="add-a-catch-page">
     <Navbar user={user} />
     {!clickedCoords ? 
-    <div style={{ backgroundColor: '#a5a5a5', padding: "8px", height: "3vh", lineHeight: "3vh", textAlign: "center", fontSize: "18px", color: "white" }}>
+    <div style={{ backgroundColor: '#414141', padding: "8px", height: "3vh", lineHeight: "3vh", textAlign: "center", fontSize: "1.5rem", color: "white" }}>
         Click the map to save a spot!
     </div> :
     null}

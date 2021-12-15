@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { InfoWindow, Marker } from '@react-google-maps/api';
-import { API } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import fish from '../assets/images/fish.png';
 import { updateSpot, deleteSpot } from "../graphql/mutations";
 
@@ -32,6 +32,7 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
       public: isPublic,
       weather: "",
       tide: "",
+      image: formData.image,
     }
     
     const inputtedDate = new Date(data.date_caught)
@@ -158,6 +159,15 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
     })
   }
 
+  async function handleImageChange(e) {
+    if(!e.target.files[0]) return;
+    const file = e.target.files[0];
+    setFormData({...formData,
+      image: file.name
+    })
+    await Storage.put(file.name, file)
+  }
+
   const handleDeleteClick = async (spot) => {
     const data = {
       id: spot.id
@@ -263,12 +273,17 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
           <form className="info-window-edit-form" onSubmit={handleSubmit} >
             <label htmlFor="fishCaught" >Type of Fish</label><br/>
             <input type="text" name="fish_type" className="input-field" id="fishCaught" value={formData.fish_type} onChange={handleChange} /><br/><br/>
-            <label htmlFor="date" >Date</label><br/>
+            <label htmlFor="date">Date</label><br/>
             <input type="date" name="date_caught" className="input-field" id="date" value={formData.date_caught} onChange={handleChange} /><br/><br/>
             <label htmlFor="time" >Time</label><br/>
             <input type="time" name="time_caught" className="input-field" id="time" value={formData.time_caught} onChange={handleChange} /><br/><br/>
             <label htmlFor="bait">Bait/Lure</label><br/>
             <input type="text" name="bait" className="input-field" id="bait" value={formData.bait} onChange={handleChange} /><br/><br/>
+            <label htmlFor="image">Update/Add Image</label><br/>
+            <input type="file" 
+            name="image" className="img-input-field" 
+            id="image" accept="image/*" 
+            onChange={handleImageChange} /><br/><br/>
             <label htmlFor="public">Do you want this spot public?</label><br/>
             <input type="checkbox" name="public" id="public" checked={isPublic} onChange={handleChange} /><br/><br/>
             <button type="submit" className="submit-button">Submit</button><br/><br/>
