@@ -22,13 +22,17 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+
+# misc
+.env
+/amplify
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/logs
 amplify/mock-data
 amplify/backend/amplify-meta.json
-amplify/backend/awscloudformation
 amplify/backend/.temp
 build/
 dist/
@@ -43,6 +47,3 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
-
-# misc
-.env
