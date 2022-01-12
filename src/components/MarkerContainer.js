@@ -30,8 +30,8 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
       time_caught: formData.time_caught,
       fish_type: formData.fish_type,
       public: isPublic,
-      weather: "",
-      tide: "",
+      weather: spot.weather,
+      tide: spot.tide,
       image: formData.image,
     }
     
@@ -48,58 +48,59 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
     const nowDate = new Date()
     const latestDate = new Date(nowDate.getTime() - (5*24*60*60*1000)).getTime() / 1000
     
-    
-    if(inputtedDateTime > Math.floor(latestDate)){
-      fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${String(coords.lat)}&lon=${String(coords.lng)}&dt=${Math.floor(inputtedDateTime)}&appid=${WEATHERKEY}&units=imperial`)
-      .then(res => res.json())
-      .then(json => data.weather = JSON.stringify(json.current))
-    }
-  
-    const endTime = inputtedDateTime - tzOffset + (60*60*6)
-
-    await fetch(`https://api.stormglass.io/v2/tide/extremes/point?lat=${coords.lat}&lng=${coords.lng}&start=${inputtedDateTime-tzOffset-(60*60*6)}&end=${endTime}`, {
-    headers: {
-    'Authorization': TIDEKEY
-    }
-    }).then((response) => response.json()).then((jsonData) => {
-      const tides = jsonData.data
-      if(jsonData.data.length === 1){
-        const tideTime = new Date(tides[0].time).getTime() / 1000
-        if(jsonData.data[0].type==="high"){
-          if(inputtedDateTime-tzOffset >= tideTime-(60*60) && inputtedDateTime-tzOffset <= tideTime+(60*30)){
-            data.tide = "High"
-          } else if(inputtedDateTime-tzOffset > tideTime) {
-            data.tide = "Falling"
-          } else if(inputtedDateTime-tzOffset < tideTime) {
-            data.tide = "Rising"
-          }
-        }else if(jsonData.data[0].type==="low"){
-          if(inputtedDateTime-tzOffset >= tideTime-(60*60) && inputtedDateTime-tzOffset <= tideTime+(60*30)){
-            data.tide = "Low"
-          } else if(inputtedDateTime-tzOffset > tideTime) {
-            data.tide = "Rising"
-          } else if(inputtedDateTime-tzOffset < tideTime) {
-            data.tide = "Falling"
-          }
-        }
-      } else if(jsonData.data.length === 2){
-        const highTideTime = new Date(tides[0].time).getTime() / 1000
-        const lowTideTime = new Date(tides[1].time).getTime() / 1000
-        if(inputtedDateTime-tzOffset >= highTideTime-(60*60) && inputtedDateTime-tzOffset <= highTideTime+(60*30) && jsonData.data[0].type==="high"){
-          data.tide = "High"
-        }else if(inputtedDateTime-tzOffset >= lowTideTime-(60*60) && inputtedDateTime-tzOffset <= lowTideTime+(60*30) && jsonData.data[1].type==="low"){
-          data.tide = "Low"
-        }else if(inputtedDateTime-tzOffset > highTideTime && inputtedDateTime-tzOffset < lowTideTime){
-          data.tide = "Falling"
-        }else if(inputtedDateTime-tzOffset > lowTideTime && inputtedDateTime-tzOffset < highTideTime){
-          data.tide = "Rising"
-        }
-      } else if(jsonData.data.length === 0){
-        data.tide = ""
+    if(data.time_caught !== spot.time_caught) {
+      if(inputtedDateTime > Math.floor(latestDate)){
+        fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${String(coords.lat)}&lon=${String(coords.lng)}&dt=${Math.floor(inputtedDateTime)}&appid=${WEATHERKEY}&units=imperial`)
+        .then(res => res.json())
+        .then(json => data.weather = JSON.stringify(json.current))
       }
-    }).catch((error) => {
-      console.log(error)
-    })
+    
+      const endTime = inputtedDateTime - tzOffset + (60*60*6)
+
+      await fetch(`https://api.stormglass.io/v2/tide/extremes/point?lat=${coords.lat}&lng=${coords.lng}&start=${inputtedDateTime-tzOffset-(60*60*6)}&end=${endTime}`, {
+      headers: {
+      'Authorization': TIDEKEY
+      }
+      }).then((response) => response.json()).then((jsonData) => {
+        const tides = jsonData.data
+        if(jsonData.data.length === 1){
+          const tideTime = new Date(tides[0].time).getTime() / 1000
+          if(jsonData.data[0].type==="high"){
+            if(inputtedDateTime-tzOffset >= tideTime-(60*60) && inputtedDateTime-tzOffset <= tideTime+(60*30)){
+              data.tide = "High"
+            } else if(inputtedDateTime-tzOffset > tideTime) {
+              data.tide = "Falling"
+            } else if(inputtedDateTime-tzOffset < tideTime) {
+              data.tide = "Rising"
+            }
+          }else if(jsonData.data[0].type==="low"){
+            if(inputtedDateTime-tzOffset >= tideTime-(60*60) && inputtedDateTime-tzOffset <= tideTime+(60*30)){
+              data.tide = "Low"
+            } else if(inputtedDateTime-tzOffset > tideTime) {
+              data.tide = "Rising"
+            } else if(inputtedDateTime-tzOffset < tideTime) {
+              data.tide = "Falling"
+            }
+          }
+        } else if(jsonData.data.length === 2){
+          const highTideTime = new Date(tides[0].time).getTime() / 1000
+          const lowTideTime = new Date(tides[1].time).getTime() / 1000
+          if(inputtedDateTime-tzOffset >= highTideTime-(60*60) && inputtedDateTime-tzOffset <= highTideTime+(60*30) && jsonData.data[0].type==="high"){
+            data.tide = "High"
+          }else if(inputtedDateTime-tzOffset >= lowTideTime-(60*60) && inputtedDateTime-tzOffset <= lowTideTime+(60*30) && jsonData.data[1].type==="low"){
+            data.tide = "Low"
+          }else if(inputtedDateTime-tzOffset > highTideTime && inputtedDateTime-tzOffset < lowTideTime){
+            data.tide = "Falling"
+          }else if(inputtedDateTime-tzOffset > lowTideTime && inputtedDateTime-tzOffset < highTideTime){
+            data.tide = "Rising"
+          }
+        } else if(jsonData.data.length === 0){
+          data.tide = ""
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
 
     await API.graphql({ query: updateSpot, variables: { input: data } });
 

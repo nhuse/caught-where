@@ -5,8 +5,7 @@ import { API } from "aws-amplify";
 import { createUserDefaultLocation, updateUserDefaultLocation } from '../graphql/mutations';
 
 const MapContainer = ({ spots, isInSpots, user, fetchSpots, isSettingDefSpot, setIsSettingDefSpot, userDefault, listDefLocs }) => {
-  const [currentPosition, setCurrentPosition] = useState({lat: 0, lng: 0});
-  // const [userDefault, setUserDefault] = useState(null);
+  const [currentPosition, setCurrentPosition] = useState({lat: 37, lng: -95});
   
   const success = (pos) => {
     const currentPosition = {
@@ -63,7 +62,7 @@ const MapContainer = ({ spots, isInSpots, user, fetchSpots, isSettingDefSpot, se
         {!isInSpots ?
         <GoogleMap
           mapContainerStyle={mapStyles}
-          zoom={7}
+          zoom={ currentPosition.lat === 37 && currentPosition.lng === -95 ?  4 : 7 }
           center={userDefault ? userDefault : currentPosition}>
             {
               currentPosition.lat &&
