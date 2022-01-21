@@ -36,7 +36,7 @@ function App() {
     <div className="App">
       <Routes>
         <Route exact path="/" element={<Home user={user} spots={spots} setSpots={setSpots} fetchSpots={fetchSpots} />} />
-        <Route exact path="/add_a_spot" element={<AddACatch user={user} spots={spots} setSpots={setSpots} />} />
+        <Route exact path="/add_a_spot" element={<AddACatch user={user} spots={spots} setSpots={setSpots} fetchSpots={fetchSpots} />} />
         <Route exact path="/your_spots" element={<YourSpots user={user} spots={spots} setSpots={setSpots} fetchSpots={fetchSpots} />} />
       </Routes>
     </div>

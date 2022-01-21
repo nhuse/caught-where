@@ -7,7 +7,7 @@ import { createSpot as createSpotMutation } from "../graphql/mutations";
 
 const TIDEKEY = process.env.REACT_APP_TIDE_KEY;
 
-export default function AddACatch({ user, setSpots, spots }) {
+export default function AddACatch({ user, setSpots, spots, fetchSpots }) {
   const initialFormState = {
     user_id: "",
     fish_type: "",
@@ -72,13 +72,13 @@ export default function AddACatch({ user, setSpots, spots }) {
     
     if(inputtedDateTime > 1483250400){
       const params = 'airTemperature,windDirection,windSpeed,cloudCover'
-        fetch(`https://api.stormglass.io/v2/weather/point?lat=${clickedCoords.lat}&lng=${clickedCoords.lng}&params=${params}&start=${inputtedDateTime-60}&end=${inputtedDateTime+60}`, {
-          headers: {
-            'Authorization': TIDEKEY
-          }
-        })
-        .then(res => res.json())
-        .then(json => data.weather = (JSON.stringify(json.hours[0])))
+      fetch(`https://api.stormglass.io/v2/weather/point?lat=${clickedCoords.lat}&lng=${clickedCoords.lng}&params=${params}&start=${inputtedDateTime-60}&end=${inputtedDateTime+60}`, {
+        headers: {
+          'Authorization': TIDEKEY
+        }
+      })
+      .then(res => res.json())
+      .then(json => data.weather = (JSON.stringify(json.hours[0])))
     }
   
     const endTime = inputtedDateTime - tzOffset + (60*60*6)
@@ -135,7 +135,7 @@ export default function AddACatch({ user, setSpots, spots }) {
         const image = await Storage.get(data.image)
         data.image = image;
       }
-      setSpots([...spots, data]);
+      fetchSpots()
       setSpotData(initialFormState);
       setClickedCoords(null);
       navigate("/");

@@ -45,6 +45,8 @@ export default function Home({ user, spots, fetchSpots }) {
     listDefLocs()
   }, [user]);
 
+  console.log(spots)
+
   return (
     <div className="home-wrapper">
       <Navbar />
