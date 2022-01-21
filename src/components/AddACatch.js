@@ -5,7 +5,6 @@ import SaveASpotMapContainer from "./SaveASpotMapContainer"
 import { API, Storage } from "aws-amplify";
 import { createSpot as createSpotMutation } from "../graphql/mutations";
 
-const WEATHERKEY = process.env.REACT_APP_WEATHER_KEY;
 const TIDEKEY = process.env.REACT_APP_TIDE_KEY;
 
 export default function AddACatch({ user, setSpots, spots }) {
@@ -71,14 +70,15 @@ export default function AddACatch({ user, setSpots, spots }) {
     const tzOffset = inputtedDate.getTimezoneOffset()*60
     inputtedDateTime = inputtedDateTime + unixTime + tzOffset;
     
-    const nowDate = new Date()
-    const latestDate = new Date(nowDate.getTime() - (5*24*60*60*1000)).getTime() / 1000
-    
-    
-    if(inputtedDateTime > Math.floor(latestDate)){
-      fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${String(clickedCoords.lat)}&lon=${String(clickedCoords.lng)}&dt=${Math.floor(inputtedDateTime)}&appid=${WEATHERKEY}&units=imperial`)
-      .then(res => res.json())
-      .then(json => data.weather = JSON.stringify(json.current))
+    if(inputtedDateTime > 1483250400){
+      const params = 'airTemperature,windDirection,windSpeed,cloudCover'
+        fetch(`https://api.stormglass.io/v2/weather/point?lat=${clickedCoords.lat}&lng=${clickedCoords.lng}&params=${params}&start=${inputtedDateTime-60}&end=${inputtedDateTime+60}`, {
+          headers: {
+            'Authorization': TIDEKEY
+          }
+        })
+        .then(res => res.json())
+        .then(json => data.weather = (JSON.stringify(json.hours[0])))
     }
   
     const endTime = inputtedDateTime - tzOffset + (60*60*6)

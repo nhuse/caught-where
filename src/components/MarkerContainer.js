@@ -4,7 +4,6 @@ import { API, Storage } from "aws-amplify";
 import fish from '../assets/images/fish.png';
 import { updateSpot, deleteSpot } from "../graphql/mutations";
 
-const WEATHERKEY = process.env.REACT_APP_WEATHER_KEY;
 const TIDEKEY = process.env.REACT_APP_TIDE_KEY;
 
 export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetchSpots }) {
@@ -31,8 +30,11 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
       fish_type: formData.fish_type,
       public: isPublic,
       weather: spot.weather,
-      tide: spot.tide,
-      image: formData.image,
+      tide: spot.tide
+    }
+
+    if(formData.image !== spot.image) {
+      data.image = formData.image
     }
     
     const inputtedDate = new Date(data.date_caught)
@@ -44,15 +46,17 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
     const unixTime = hours*60*60 + minutes*60
     const tzOffset = inputtedDate.getTimezoneOffset()*60
     inputtedDateTime = inputtedDateTime + unixTime + tzOffset;
-    
-    const nowDate = new Date()
-    const latestDate = new Date(nowDate.getTime() - (5*24*60*60*1000)).getTime() / 1000
-    
+
     if(data.time_caught !== spot.time_caught) {
-      if(inputtedDateTime > Math.floor(latestDate)){
-        fetch(`https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=${String(coords.lat)}&lon=${String(coords.lng)}&dt=${Math.floor(inputtedDateTime)}&appid=${WEATHERKEY}&units=imperial`)
+      if(inputtedDateTime > 1483250400){
+        const params = 'airTemperature,windDirection,windSpeed,cloudCover'
+        fetch(`https://api.stormglass.io/v2/weather/point?lat=${coords.lat}&lng=${coords.lng}&params=${params}&start=${inputtedDateTime-60}&end=${inputtedDateTime+60}`, {
+          headers: {
+            'Authorization': TIDEKEY
+          }
+        })
         .then(res => res.json())
-        .then(json => data.weather = JSON.stringify(json.current))
+        .then(json => data.weather = (JSON.stringify(json.hours[0])))
       }
     
       const endTime = inputtedDateTime - tzOffset + (60*60*6)
@@ -114,7 +118,7 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
   let windDir;
   if(spot.weather !== "") {
     parsedWeather = JSON.parse(spot.weather);
-    windDir = degToCompass(parsedWeather.wind_deg)
+    windDir = degToCompass(parsedWeather.windDirection.noaa);
   }
 
   let date = spot.date_caught.split('-')
@@ -161,7 +165,10 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
   }
 
   async function handleImageChange(e) {
-    if(!e.target.files[0]) return;
+    if(e.target.files.length===0) {
+      setFormData({...formData, image: spot.image})
+      return;
+    }
     const file = e.target.files[0];
     setFormData({...formData,
       image: file.name
@@ -230,9 +237,8 @@ export default function MarkerContainer({ spot, clusterer, isInSpots, user, fetc
             <div >
               <h4 className="weather-info-header">Weather</h4>
               <ul style={{listStyle: "none", textAlign: "center", padding: "0" }}>
-                <li>Condition: {parsedWeather.weather[0].main.toUpperCase()}</li>
-                <li>Winds: {Math.floor(parsedWeather.wind_speed)} MPH {windDir}</li>
-                <li>Temperature: {Math.floor(parsedWeather.temp)} {'\u00B0'}F</li>
+                <li>Winds: {Math.floor(parsedWeather.windSpeed.noaa * 2.23694)} MPH {windDir}</li>
+                <li>Temperature: {Math.floor((parseInt(parsedWeather.airTemperature.noaa * (9/5)) + 32))} {'\u00B0'}F</li>
               </ul>
             </div>
             :
